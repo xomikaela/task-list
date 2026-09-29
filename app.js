@@ -1,6 +1,15 @@
 import express from "express";
+import usersRouter from "#api/users";
+import tasksRouter from "#api/tasks";
+import getUserFromToken from "#middleware/getUserFromToken";
 const app = express();
 export default app;
+
+app.use(express.json());
+app.use(getUserFromToken);
+
+app.use("/users", usersRouter);
+app.use("/tasks", tasksRouter);
 
 app.use((err, req, res, next) => {
   switch (err.code) {
